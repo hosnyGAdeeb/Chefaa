@@ -24943,25 +24943,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
-  "class": "text-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "badge bg-success"
-}, "Hi There")], -1
-/* HOISTED */
-);
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "alert alert-primary",
-  role: "alert"
-}, " A simple primary alert—check it out! ", -1
-/* HOISTED */
-);
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<h1 class=\"text-center\"><span class=\"badge bg-success\">Hi There</span></h1><h1 class=\"text-center\"><span class=\"badge bg-success\"> Here&#39;s some statistics about our products &amp; pharmacies </span></h1><div class=\"row\"><div class=\"col-6\"><div class=\"card\"><div class=\"card-body\"><h1>50 Product</h1></div><div class=\"card-footer\"><a href=\"#\" class=\"btn btn-primary\"> Go To Products </a></div></div></div><div class=\"col-6\"><div class=\"card\"><div class=\"card-body\"><h1>50 Pharmacies</h1></div><div class=\"card-footer\"><a href=\"#\" class=\"btn btn-primary\"> Go To Pharmacies </a></div></div></div></div>", 3);
 
 function render(_ctx, _cache) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, _hoisted_2], 64
-  /* STABLE_FRAGMENT */
-  );
+  return _hoisted_1;
 }
 
 /***/ }),
