@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-//Route::inertia('/', 'Home');
-
-Route::get('/', function () {
-    return \App\Http\Resources\PharmaciesResource::collection(\App\Models\Pharmacy::all());
-//    return \App\Http\Resources\ProductsResource::collection(\App\Models\Product::all());
-});
+Route::get('/', [\App\Http\Controllers\Web\MainController::class, 'home']);
+Route::resource('products', \App\Http\Controllers\Web\ProductsController::class);
+Route::resource('pharmacies', \App\Http\Controllers\Web\PharmaciesController::class);

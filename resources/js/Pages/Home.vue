@@ -9,7 +9,7 @@
         <div class="col-6">
             <div class="card">
                 <div class="card-body">
-                    <h1>50 Product</h1>
+                    <h1>{{ data['products_count'] }} Product</h1>
                 </div>
                 <div class="card-footer">
                     <a href="#" class="btn btn-primary">
@@ -21,7 +21,7 @@
         <div class="col-6">
             <div class="card">
                 <div class="card-body">
-                    <h1>50 Pharmacies</h1>
+                    <h1>{{ data['pharmacies_count'] }} Pharmacies</h1>
                 </div>
                 <div class="card-footer">
                     <a href="#" class="btn btn-primary">
@@ -33,5 +33,7 @@
     </div>
 </template>
 <script setup>
-
+const props = defineProps({
+    data: Object,
+});
 </script>

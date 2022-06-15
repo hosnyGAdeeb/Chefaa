@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Resources\PharmaciesResource;
+use App\Http\Resources\ProductsResource;
 use Illuminate\Support\ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        ProductsResource::withoutWrapping();
+        PharmaciesResource::withoutWrapping();
     }
 }
