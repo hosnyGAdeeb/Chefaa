@@ -1,6 +1,10 @@
 <template>
     <div class="mb-3">
-        <label :for="label+name" class="form-label">{{ label }}</label>
+        <label :for="label+name" class="form-label">{{ label }}
+            <a v-if="value" :href="value">
+                <img width="30" :src="value" :alt="name + '_image'"/>
+            </a>
+        </label>
         <input
             class="form-control"
             type="file"
@@ -18,6 +22,7 @@ const props = defineProps({
     label: String,
     modelValue: Object,
     error: String,
+    value: String,
 });
 
 </script>

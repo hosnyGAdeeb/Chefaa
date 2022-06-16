@@ -7,10 +7,7 @@ use App\Http\Requests\Web\ProductStoreRequest;
 use App\Http\Requests\Web\ProductUpdateRequest;
 use App\Http\Resources\ProductsResource;
 use App\Models\Pharmacy;
-use App\Models\Product;
-use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\ProductRepositoryInterface;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProductsController extends Controller
@@ -46,49 +43,72 @@ class ProductsController extends Controller
         return Inertia::render('Products/Create', ['data' => $data]);
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param ProductStoreRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(ProductStoreRequest $request)
     {
-
+        try {
+            $this->repo->create($request->only([
+                'image',
+                'title',
+                'description',
+                'price',
+                'quantity',
+                'pharmacies'
+            ]));
+            return redirect('/products');
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Inertia\Response
      */
     public function show($id)
     {
-        dd('show');
+        $data['product'] = new ProductsResource($this->repo->find($id));
+        return Inertia::render('Products/Show', ['data' => $data]);
     }
 
+
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Inertia\Response
      */
     public function edit($id)
     {
-        dd('edit');
+        $data['pharmacies'] = Pharmacy::all()->map(function ($pharmacy) {
+            return ['id' => $pharmacy['id'], 'name' => $pharmacy['name']];
+        });
+        $data['product'] = new ProductsResource($this->repo->find($id));
+        return Inertia::render('Products/Edit', ['data' => $data]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param ProductUpdateRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function update(ProductUpdateRequest $request, $id)
     {
-        //
+        try {
+            $this->repo->update($request->only([
+                'image',
+                'title',
+                'description',
+                'price',
+                'quantity',
+                'pharmacies'
+            ]), $id);
+            return back();
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
 

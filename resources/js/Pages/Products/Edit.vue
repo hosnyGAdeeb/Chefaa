@@ -8,19 +8,20 @@
         <div class="row">
             <div class="col">
                 <InputFile
-                    v-model="createForm.image"
+                    v-model="editForm.image"
                     name="image"
                     label="Image"
-                    :error="createForm.errors.image"
+                    :error="editForm.errors.image"
+                    :value="data.product?.image"
                 />
             </div>
             <div class="col">
                 <Input
-                    v-model="createForm.title"
+                    v-model="editForm.title"
                     type="text"
                     name="title"
                     label="Title"
-                    :error="createForm.errors.title"
+                    :error="editForm.errors.title"
                 />
             </div>
         </div>
@@ -28,38 +29,38 @@
         <div class="row">
             <div class="col">
                 <Input
-                    v-model="createForm.price"
+                    v-model="editForm.price"
                     type="text"
                     name="price"
                     label="Price"
-                    :error="createForm.errors.price"
+                    :error="editForm.errors.price"
                 />
             </div>
             <div class="col">
                 <Input
-                    v-model="createForm.quantity"
+                    v-model="editForm.quantity"
                     type="text"
                     name="quantity"
                     label="Quantity"
-                    :error="createForm.errors.quantity"
+                    :error="editForm.errors.quantity"
                 />
             </div>
         </div>
         <Textarea
-            v-model="createForm.description"
+            v-model="editForm.description"
             name="description"
             label="Description"
-            :error="createForm.errors.description"
+            :error="editForm.errors.description"
         />
 
         <PharmaciesFormSelections
-            v-model="createForm.pharmacies"
+            v-model="editForm.pharmacies"
             :pharmacies="data.pharmacies"
-            :errors="createForm.errors"
+            :errors="editForm.errors"
         />
 
         <SubmitButton
-            :processing="createForm.processing"
+            :processing="editForm.processing"
         />
 
     </form-wrapper>
@@ -75,24 +76,32 @@ import PharmaciesFormSelections from "./Components/PharmaciesFormSelections";
 import {Inertia} from "@inertiajs/inertia";
 import 'jquery';
 
-defineProps({
+const props = defineProps({
     data: Object
 });
 
-let createForm = useForm({
+let editForm = useForm({
+    _method: 'put',
     image: {},
-    title: '',
-    description: '',
-    price: '',
-    quantity: '',
-    pharmacies: {},
+    title: props.data.product?.title,
+    description: props.data.product?.description,
+    price: props.data.product?.price.toString(),
+    quantity: props.data.product?.quantity.toString(),
+    pharmacies: props.data.product?.pharmacies.map((val, index) => {
+        return {
+            id: val['id'].toString(),
+            price: val['priceInPharmacy'].toString(),
+            rowId: 'row_' + (index + 1),
+        }
+    }),
+
 });
 
 let submitAction = () => {
-    createForm.post('/products', {
+    editForm.post('/products/' + props.data.product?.id, {
         forceFormData: true,
         onSuccess: (response) => {
-            createForm.reset();
+            editForm.reset();
             $('.toast-success').toast('show');
         },
     });

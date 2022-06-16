@@ -11,4 +11,46 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         $this->model = $product;
     }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function create(array $data)
+    {
+        $data['image'] = $data['image']->store('/public/uploads/products');
+        $pharmacies = $data['pharmacies'] ?? [];
+        unset($data['pharmacies']);
+        $product = $this->model->create($data);
+        if (count($pharmacies)) {
+            foreach ($pharmacies as $pharmacy) {
+                $product->pharmacies()->attach($pharmacy['id'], ['price' => $pharmacy['price']]);
+            }
+        }
+        return $product;
+    }
+
+    /**
+     * @param array $data
+     * @param $id
+     * @return mixed
+     */
+    public function update(array $data, $id)
+    {
+        $product = $this->model->find($id);
+        if (isset($data['image']) && !empty($data['image'])) {
+            $data['image'] = $data['image']->store('/public/uploads/products');
+        }
+        $pharmacies = $data['pharmacies'] ?? [];
+        unset($data['pharmacies']);
+        $product->update($data);
+        if (count($pharmacies)) {
+            $product->pharmacies()->detach();
+            foreach ($pharmacies as $pharmacy) {
+                $product->pharmacies()->attach($pharmacy['id'], ['price' => $pharmacy['price']]);
+            }
+        }
+
+        return $product;
+    }
 }

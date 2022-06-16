@@ -25,7 +25,7 @@ class ProductUpdateRequest extends FormRequest
     {
         return [
             'image' => 'nullable|image',
-            'title' => 'required|max:255',
+            'title' => 'required|max:255|unique:products,title,' . $this->route('product'),
             'description' => 'required',
             'price' => 'required|numeric|min:1',
             'quantity' => 'required|numeric|min:1',

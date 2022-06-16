@@ -27,4 +27,8 @@ defineProps({
     icon: String,
 });
 </script>
-
+<style>
+#toast_success {
+    z-index: 1000000;
+}
+</style>
