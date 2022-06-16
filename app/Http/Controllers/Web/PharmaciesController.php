@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Repositories\PharmacyRepositoryInterface;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PharmaciesController extends Controller
 {
@@ -16,14 +17,13 @@ class PharmaciesController extends Controller
         $this->repo = $repo;
     }
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index()
     {
-        //
+        return Inertia::render('Pharmacies/Index');
     }
 
     /**

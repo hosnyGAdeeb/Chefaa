@@ -12,9 +12,7 @@
                     <h1>{{ data['products_count'] }} Product</h1>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">
-                        Go To Products
-                    </a>
+                    <Link href="/products" class="btn btn-primary">Go To Products</Link>
                 </div>
             </div>
         </div>
@@ -24,9 +22,7 @@
                     <h1>{{ data['pharmacies_count'] }} Pharmacies</h1>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">
-                        Go To Pharmacies
-                    </a>
+                    <Link href="/pharmacies" class="btn btn-primary">Go To Pharmacies</Link>
                 </div>
             </div>
         </div>

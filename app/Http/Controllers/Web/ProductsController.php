@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductsResource;
+use App\Models\Pharmacy;
 use App\Models\Product;
 use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProductsController extends Controller
 {
@@ -20,23 +22,26 @@ class ProductsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index()
     {
-        return ProductsResource::collection(Product::paginate(50));
+        return Inertia::render('Products/Index');
+//        return ProductsResource::collection(Product::paginate(50));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
-        //
+        $data['pharmacies'] = Pharmacy::all()->map(function ($pharmacy) {
+            return [
+                'id' => $pharmacy['id'],
+                'name' => $pharmacy['name'],
+            ];
+        });
+        return Inertia::render('Products/Create', ['data' => $data]);
     }
 
     /**
@@ -47,7 +52,11 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'image' => 'required|image',
+            'title' => 'required',
+            'description' => 'required',
+        ]);
     }
 
     /**

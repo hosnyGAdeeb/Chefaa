@@ -1,9 +1,11 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container-fluid">
-           <span class="navbar-brand mb-0 h1">Chefaa</span>
+            <span class="navbar-brand mb-0 h1">Chefaa</span>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -12,23 +14,38 @@
 
 
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <Link href="/"
+                              class="nav-link "
+                              :class="{ 'active': $page.url === '/' }"
+                        >
+                            Home
+                        </Link>
                     </li>
 
 
                     <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="#">Products</a>
+                        <Link href="/products"
+                              class="nav-link"
+                              :class="{ 'active': $page.url.startsWith('/products') }"
+                        >
+                            Products
+                        </Link>
                     </li>
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pharmacies</a>
+                        <Link href="/pharmacies"
+                              class="nav-link"
+                              :class="{ 'active': $page.url.startsWith('/pharmacies') }"
+                        >
+                            Pharmacies
+                        </Link>
                     </li>
 
 
                 </ul>
 
-                <NavSearch />
+                <NavSearch/>
 
             </div>
         </div>
