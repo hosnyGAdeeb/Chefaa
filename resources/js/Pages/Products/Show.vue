@@ -9,7 +9,7 @@
                     <table class="">
                         <tr>
                             <td>
-                                <a :href="data.product.image">
+                                <a :href="data.product.image" target="_blank">
                                     <img width="120" :src="data.product.image" :alt="data.product.name + '_image'">
                                 </a>
                             </td>
@@ -23,6 +23,18 @@
                         <tr>
                             <th>
                                 Quantity : {{ data.product.quantity }}
+                            </th>
+
+                        </tr>
+
+                        <tr>
+                            <th>
+                                Edit : &nbsp;
+                                <Link :href="'/products/' + data.product?.id + '/edit'"
+                                      class="btn btn-info btn-sm text-white"
+                                >
+                                    <font-awesome-icon icon="fa-edit"/>
+                                </Link>
                             </th>
 
                         </tr>
@@ -43,6 +55,7 @@
                         </tr>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
