@@ -8,14 +8,19 @@
         <option selected>{{ label }}</option>
         <option v-for="option in options" :value="option[optionValueKey]">{{ option[optionTextKey] }}</option>
     </select>
+    <form-error :error="error"/>
 </template>
 <script setup>
+import FormError from "../Alerts/FormError";
+
+
 defineProps({
     options: Object,
     optionValueKey: String,
     optionTextKey: String,
     name: String,
     label: String,
-    modelValue: String
+    modelValue: String,
+    error: String,
 });
 </script>

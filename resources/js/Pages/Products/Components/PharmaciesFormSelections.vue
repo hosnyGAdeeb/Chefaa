@@ -4,7 +4,7 @@
         <h3>
             Product Prices In Different Pharmacies
         </h3>
-        <div class="row mt-3 mb-3" v-for="index in currentValue.length" :id="'row_' + index">
+        <div class="row mt-3 mb-3" v-for="(index, key) in currentValue.length" :id="'row_' + index">
 
 
             <template v-if="currentValue[index - 1] !== undefined">
@@ -19,6 +19,7 @@
                         name="pharmacy"
                         label="Pharmacy"
                     />
+
                 </div>
 
                 <!-- Add Pharmacy Price -->
@@ -55,20 +56,30 @@
 
                 </div>
 
-
             </template>
-
         </div>
+
+
+        <div class="container">
+            <template v-for="(error, key) in errors">
+                <div v-if="key.startsWith('pharmacies')" class="error">
+                    {{ error }}
+                </div>
+            </template>
+        </div>
+
     </div>
 </template>
 <script setup>
 import {ref, watch} from "vue";
 import Select from "../../Components/Forms/Select";
 import Input from "../../Components/Forms/Input";
+import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
     pharmacies: Object,
     modelValue: Object,
+    errors: Object,
 });
 const emit = defineEmits(['update:modelValue'])
 
@@ -86,6 +97,8 @@ let removeRow = (id) => {
     for (let key in currentValue.value) {
         if (currentValue.value[key]?.rowId === id) {
             delete currentValue.value[key];
+            Inertia.reload();
+            break;
         }
     }
 }
@@ -98,3 +111,8 @@ watch(currentValue, value => {
 });
 
 </script>
+<style>
+.error {
+    color: red;
+}
+</style>

@@ -20,15 +20,17 @@ interface BaseRepositoryInterface
 
     public function last();
 
-    public function get($orderKey = 'id', $orderDir = "DESC");
+    public function get($orderKey, $orderDir);
 
-    public function getWhere(array $where, $orderKey = 'id', $orderDir = "DESC");
+    public function paginate($perPage, $orderKey, $orderDir);
 
-    public function getWhereWith(array $where, array $with, $orderKey = 'id', $orderDir = "DESC");
+    public function getWhere(array $where, $orderKey, $orderDir);
+
+    public function getWhereWith(array $where, array $with, $orderKey, $orderDir);
 
     public function findWith($id, array $with);
 
-    public function getWith(array $with, $orderKey = 'id', $orderDir = "DESC");
+    public function getWith(array $with, $orderKey, $orderDir);
 
     public function delete($id);
 

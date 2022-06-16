@@ -4,10 +4,10 @@ import {createInertiaApp, Link} from '@inertiajs/inertia-vue3';
 import {InertiaProgress} from '@inertiajs/progress';
 import Layout from './Pages/Layout/Layout';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {faEye, faEdit, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
-library.add(faPlus, faTrash);
+library.add(faPlus, faTrash, faEye, faEdit);
 
 createInertiaApp({
     resolve: name => {

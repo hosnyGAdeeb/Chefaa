@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\ProductStoreRequest;
+use App\Http\Requests\Web\ProductUpdateRequest;
 use App\Http\Resources\ProductsResource;
 use App\Models\Pharmacy;
 use App\Models\Product;
@@ -26,8 +28,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Products/Index');
-//        return ProductsResource::collection(Product::paginate(50));
+        $data['products'] = ProductsResource::collection($this->repo->paginate());
+        return Inertia::render('Products/Index', ['data' => $data]);
     }
 
     /**
@@ -50,13 +52,9 @@ class ProductsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        $this->validate($request, [
-            'image' => 'required|image',
-            'title' => 'required',
-            'description' => 'required',
-        ]);
+
     }
 
     /**
@@ -67,7 +65,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        dd('show');
     }
 
     /**
@@ -78,7 +76,7 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd('edit');
     }
 
     /**
@@ -88,19 +86,19 @@ class ProductsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
         //
     }
 
+
     /**
-     * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return bool
      */
     public function destroy($id)
     {
-        //
+        return $this->repo->delete($id);
     }
 }

@@ -55,6 +55,7 @@
         <PharmaciesFormSelections
             v-model="createForm.pharmacies"
             :pharmacies="data.pharmacies"
+            :errors="createForm.errors"
         />
 
         <SubmitButton
