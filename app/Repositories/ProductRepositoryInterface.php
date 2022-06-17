@@ -10,4 +10,5 @@ interface ProductRepositoryInterface
 
     public function filter(string $search, $orderKey, $orderDir, $perPage);
 
+    public function getProductWithCheapestPharmacies($id);
 }

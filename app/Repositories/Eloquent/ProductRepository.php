@@ -68,4 +68,15 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->paginate($perPage)
             ->withQueryString();
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getProductWithCheapestPharmacies($id)
+    {
+        return $this->model->with(['pharmacies' => function ($q) {
+            $q->take(5)->orderBy('pharmacy_product.price', 'ASC');
+        }])->where('id', $id)->first();
+    }
 }
