@@ -31,27 +31,30 @@ class SearchCheapestProducts extends Command
     public function handle(ProductRepositoryInterface $repo)
     {
         $id = $this->argument('id');
-        $data = $repo->getProductWithCheapestPharmacies($id);
 
-        $this->table(
-            ['Product Title', 'Price'],
-            [
+        try {
+            $data = $repo->getProductWithCheapestPharmacies($id);
+            $this->table(
+                ['Product Title', 'Price'],
                 [
-                    'Product Title' => $data['title'],
-                    'Price' => $data['price'],
+                    [
+                        'Product Title' => $data['title'],
+                        'Price' => $data['price'],
+                    ]
                 ]
-            ]
-        );
-        
-        $this->table(
-            ['Pharmacy', 'Price'],
-            $data['pharmacies']->map(function ($pharmacy) {
-                return [
-                    'Pharmacy' => $pharmacy['name'],
-                    'Price' => $pharmacy['pivot']['price'],
-                ];
-            }),
-        );
+            );
+            $this->table(
+                ['Pharmacy', 'Price'],
+                $data['pharmacies']->map(function ($pharmacy) {
+                    return [
+                        'Pharmacy' => $pharmacy['name'],
+                        'Price' => $pharmacy['pivot']['price'],
+                    ];
+                }),
+            );
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
 
     }
 
