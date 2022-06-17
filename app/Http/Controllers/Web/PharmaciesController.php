@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PharmaciesResource;
+use App\Http\Resources\ProductsResource;
 use App\Repositories\PharmacyRepositoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,28 +25,39 @@ class PharmaciesController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Pharmacies/Index');
+        $data['pharmacies'] = PharmaciesResource::collection($this->repo->paginate());
+        return Inertia::render('Pharmacies/Index', ['data' => $data]);
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
-        //
+        return Inertia::render('Pharmacies/Create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:pharmacies,name',
+            'address' => 'required|max:255',
+        ]);
+
+        try {
+            $this->repo->create($request->only(['name', 'address']));
+            return redirect('/pharmacies');
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+
     }
 
     /**
@@ -59,36 +72,44 @@ class PharmaciesController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Inertia\Response
      */
     public function edit($id)
     {
-        //
+        $data['pharmacy'] = new PharmaciesResource($this->repo->find($id));
+        return Inertia::render('Pharmacies/Edit', ['data' => $data]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:pharmacies,name,' . $id,
+            'address' => 'required|max:255',
+        ]);
+
+        try {
+            $this->repo->update($request->only(['name', 'address']), $id);
+            return back();
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return bool
      */
     public function destroy($id)
     {
-        //
+        return $this->repo->delete($id);
     }
 }

@@ -8,4 +8,6 @@ interface ProductRepositoryInterface
 
     public function update(array $data, $id);
 
+    public function filter(string $search, $orderKey, $orderDir, $perPage);
+
 }

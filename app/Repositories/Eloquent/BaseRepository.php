@@ -67,7 +67,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     // get All
     public function paginate($perPage = 10, $orderKey = 'id', $orderDir = "DESC")
     {
-        return $this->model->orderBy($orderKey, $orderDir)->paginate($perPage);
+        return $this->model->orderBy($orderKey, $orderDir)->paginate($perPage)->withQueryString();
     }
 
     // get Where condition

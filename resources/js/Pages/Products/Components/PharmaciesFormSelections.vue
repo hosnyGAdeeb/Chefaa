@@ -83,8 +83,8 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue'])
 
-
-let currentValue = ref(props.modelValue ?? [{id: "", price: ""}]);
+const intVal = props.modelValue.length ? props.modelValue : [{id: null, price: null}];
+let currentValue = ref(intVal);
 
 
 let addRow = (id) => {

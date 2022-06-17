@@ -42,15 +42,22 @@
                         </Link>
                     </li>
 
+                    <li class="nav-item">
+                        <Link href="/search"
+                              class="nav-link"
+                              :class="{ 'active': $page.url.startsWith('/search') }"
+                        >
+                            Search
+                        </Link>
+                    </li>
+
 
                 </ul>
 
-                <NavSearch/>
 
             </div>
         </div>
     </nav>
 </template>
 <script setup>
-import NavSearch from "./NavSearch";
 </script>

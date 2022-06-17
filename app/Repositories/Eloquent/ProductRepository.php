@@ -53,4 +53,19 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
         return $product;
     }
+
+    /**
+     * @param string $search
+     * @param $orderKey
+     * @param $orderDir
+     * @return mixed
+     */
+    public function filter(string $search, $orderKey = 'id', $orderDir = 'DESC', $perPage = 20)
+    {
+        return $this->model
+            ->where('title', 'LIKE', '%' . $search . '%')
+            ->orderBy($orderKey, $orderDir)
+            ->paginate($perPage)
+            ->withQueryString();
+    }
 }

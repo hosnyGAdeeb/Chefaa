@@ -72,8 +72,7 @@ import SubmitButton from "../Components/Forms/SubmitButton";
 import {useForm} from '@inertiajs/inertia-vue3'
 import InputFile from "../Components/Forms/InputFile";
 import PharmaciesFormSelections from "./Components/PharmaciesFormSelections";
-import {Inertia} from "@inertiajs/inertia";
-import 'jquery';
+
 
 defineProps({
     data: Object

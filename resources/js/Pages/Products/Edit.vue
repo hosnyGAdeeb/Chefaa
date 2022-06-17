@@ -1,7 +1,7 @@
 <template>
 
     <div class="container mb-3">
-        <h1>Add New Product</h1>
+        <h1>Edit Product</h1>
     </div>
 
     <form-wrapper @formSubmit="submitAction">
@@ -74,7 +74,7 @@ import {useForm} from '@inertiajs/inertia-vue3'
 import InputFile from "../Components/Forms/InputFile";
 import PharmaciesFormSelections from "./Components/PharmaciesFormSelections";
 import {Inertia} from "@inertiajs/inertia";
-import 'jquery';
+
 
 const props = defineProps({
     data: Object
@@ -101,7 +101,7 @@ let submitAction = () => {
     editForm.post('/products/' + props.data.product?.id, {
         forceFormData: true,
         onSuccess: (response) => {
-            editForm.reset();
+            Inertia.reload();
             $('.toast-success').toast('show');
         },
     });

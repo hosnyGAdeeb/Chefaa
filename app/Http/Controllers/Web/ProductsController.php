@@ -8,6 +8,7 @@ use App\Http\Requests\Web\ProductUpdateRequest;
 use App\Http\Resources\ProductsResource;
 use App\Models\Pharmacy;
 use App\Repositories\ProductRepositoryInterface;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProductsController extends Controller
@@ -121,4 +122,16 @@ class ProductsController extends Controller
     {
         return $this->repo->delete($id);
     }
+
+    /**
+     * @return \Inertia\Response
+     */
+    public function search(Request $request)
+    {
+        $data['products'] = ProductsResource::collection($this->repo->filter($request->search ?? ''));
+        $data['filters'] = $request->only(['search']);
+        return Inertia::render('Products/Search', ['data' => $data]);
+    }
+
+
 }
