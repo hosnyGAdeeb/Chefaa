@@ -17,7 +17,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'image' => '/uploads/products/default.jpg',
+            'image' => 'uploads/products/default.jpg',
             'title' => $this->faker->unique()->sentence(3),
             'description' => $this->faker->text(),
             'price' => rand(1, 1000),
